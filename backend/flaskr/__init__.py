@@ -116,7 +116,7 @@ def create_app(test_config=None):
   the form will clear and the question will appear at the end of the last page
   of the questions list in the "List" tab.  
   '''
-  @app.route("/questions", methods=['POST'])
+  @app.route("/questions/add", methods=['POST'])
   def add_question():
     body = request.get_json()
     if not ('question' in body and 'answer' in body):
@@ -139,6 +139,7 @@ def create_app(test_config=None):
 
       except:
         abort(422)
+
   '''
   @TODO: 
   Create a POST endpoint to get questions based on a search term. 

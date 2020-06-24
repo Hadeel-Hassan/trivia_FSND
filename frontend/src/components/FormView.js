@@ -38,7 +38,7 @@ class FormView extends Component {
     if (!this.handleValidation()) {
     } else {
       $.ajax({
-        url: "/questions", //TODO: update request URL
+        url: "/questions/add", //TODO: update request URL
         type: "POST",
         dataType: "json",
         contentType: "application/json",
@@ -47,19 +47,21 @@ class FormView extends Component {
           answer: this.state.answer,
           difficulty: this.state.difficulty,
           category: this.state.category,
-          valid: this.state.formIsValid,
+          valid: true,
         }),
         xhrFields: {
           withCredentials: true,
         },
         crossDomain: true,
         success: (result) => {
-          alert("Your question was successfully added!");
+          alert("Your question was successfully added! ");
+          console.log(result);
+          
           document.getElementById("add-question-form").reset();
           return;
         },
         error: (error) => {
-          alert("Unable to add question. Please try your request again");
+          alert("Unable to add question. Please try your request again "+error.responseText);
           return;
         },
       });
