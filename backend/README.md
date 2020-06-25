@@ -66,29 +66,171 @@ One note before you delve into your tasks: for each endpoint you are expected to
 8. Create a POST endpoint to get questions to play the quiz. This endpoint should take category and previous question parameters and return a random questions within the given category, if provided, and that is not one of the previous questions. 
 9. Create error handlers for all expected errors including 400, 404, 422 and 500. 
 
-REVIEW_COMMENT
+
+## Endpoints
+
 ```
-This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
-
-Endpoints
 GET '/categories'
-GET ...
-POST ...
-DELETE ...
+GET '/questions'
+GET '/categories/<int:category_id>/questions'
+POST '/questions/add'
+POST '/questions/search'
+POST '/quizzes' 
+DELETE '/questions/<question_id>'
+```
 
-GET '/categories'
+#### GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request Arguments: None
 - Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
-{'1' : "Science",
-'2' : "Art",
-'3' : "Geography",
-'4' : "History",
-'5' : "Entertainment",
-'6' : "Sports"}
+    ##### example:
+   ```
+    {
+     '1' : "Science",
+     '2' : "Art",
+     '3' : "Geography",
+     '4' : "History",
+     '5' : "Entertainment",
+     '6' : "Sports"
+    }
+    ```
 
-```
+#### GET '/questions'
+- Fetches a dictionary of all the questions in and the value of its category type
+- Request Arguments: page number
+- Returns: An object that contains an object of questions of the requested page, the number of total questions, an object of all categories, and the current category that is NULL for this case.
+    ##### example:
+    ```
+    {
+     'questions': [
+        {
+        "answer": "Apollo 13",
+        "category": 5,
+        "difficulty": 4,
+        "id": 2,
+        "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+        },
+        {
+        "answer": "Tom Cruise",
+        "category": 5,
+        "difficulty": 4,
+        "id": 4,
+        "question": "What actor did author Anne     Rice first denounce, then praise in the role of her beloved Lestat?"
+        }
+     ]
+     'total_questions': 2,
+     'categories': {
+        '1' : "Science",
+        '2' : "Art",
+        '3' : "Geography",
+        '4' : "History",
+        '5' : "Entertainment",
+        '6' : "Sports"
+        },
+     'current_category': null
+    }
+    ```
 
+
+#### GET '/categories/<category_id>/questions'
+- Fetches a dictionary of questions of a specific category.
+- Request Arguments: None
+- Returns: An object that contains an object of questions with an id of the requested category ID, the number of total questions in that category, and the ID of the current category.
+    ##### example:
+
+    ```
+    {
+        "current_category": 3,
+        "questions": [
+            {
+            "answer": "Lake Victoria",
+            "category": 3,
+            "difficulty": 2,
+            "id": 13,
+            "question": "What is the largest lake in Africa?"
+            },
+            {
+            "answer": "The Palace of Versailles",
+            "category": 3,
+            "difficulty": 3,
+            "id": 14,
+            "question": "In which royal palace would you find the Hall of Mirrors?"
+            },
+            {
+            "answer": "Agra",
+            "category": 3,
+            "difficulty": 2,
+            "id": 15,
+            "question": "The Taj Mahal is located in which Indian city?"
+            }
+        ],
+        "total_questions": 3
+    }
+    ```
+
+#### POST '/questions/add'
+- Creats a new question and add it to the list of questions.
+- Request Arguments: question, answer, difficulty, category, form validation status.
+- Returns: An object with a single key, created, that contains the ID of the new question that was created.
+
+    ##### example:
+    ```
+    {
+        "created": 5,
+    }
+    ```
+
+#### POST '/questions/search'
+- Fetches a list of questions objects that includes the queried search term.
+- Request Arguments: search term
+- Returns: An object of current category ID, list of questions that matches, and the number of total questions.
+
+    ##### example:
+    ```
+    {
+        "current_category": null,
+        "questions": [
+            {
+            "answer": "Apollo 13",
+            "category": 5,
+            "difficulty": 4,
+            "id": 2,
+            "question": "What movie earned Tom Hanks his third straight Oscar nomination, in 1996?"
+            }
+        ],
+        "total_questions": 1
+    }
+    ```
+
+#### POST '/quizzes'
+- Start a quizzing game, by fetching questions objects randomly that are under the selected category.
+- Request Arguments: list of previous questions, object of quiz category Id and category type
+- Returns: A question object
+
+    ##### example:
+    ```
+    {
+        "question": {
+            "answer": "The Liver",
+            "category": 1,
+            "difficulty": 4,
+            "id": 20,
+            "question": "What is the heaviest organ in the human body?"
+        },
+    }
+    ```
+
+#### DELETE '/questions/<question_id>'
+- Delete the question objecn with the requested ID.
+- Request Arguments: None
+- Returns: An object with a single key, deleted, that contains the ID of the deleted question.
+
+    ##### example:
+    ```
+    {
+        "deleted": "35",
+    }
+    ```
 
 ## Testing
 To run the tests, run
