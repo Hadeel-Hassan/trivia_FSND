@@ -68,11 +68,6 @@ class QuizView extends Component {
           guess: '',
           forceEnd: result.question ? false : true
         })
-        console.log(JSON.stringify({
-          previous_questions: previousQuestions,
-          quiz_category: this.state.quizCategory
-        }));
-        
         return;
       },
       error: (error) => {
